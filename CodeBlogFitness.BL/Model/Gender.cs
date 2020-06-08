@@ -24,9 +24,9 @@ namespace CodeBlogFitness.BL.Model
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException("Имя пользователя не может быть пустым или null", nameof(name));
-
-                Name = name;
             }
+
+            Name = name;
         }
 
         public override string ToString()
