@@ -1,6 +1,6 @@
 ﻿using System;
 using CodeBlogFitness.BL.Controller;
-
+using CodeBlogFitness.BL.Model;
 
 namespace CodeBlogFitness.CMD
 {
@@ -14,11 +14,11 @@ namespace CodeBlogFitness.CMD
 
             Console.WriteLine("Введите имя пользователя");
             var name = Console.ReadLine();
-
-            
+                        
             var userController = new UserController(name);
+            var eatingController = new EatingController(userController.CurrentUser);
 
-            if(userController.IsNewUser)
+            if (userController.IsNewUser)
             {
                 Console.Write("Введите пол : ");
                 var gender = Console.ReadLine();
@@ -32,7 +32,39 @@ namespace CodeBlogFitness.CMD
             }
 
             Console.WriteLine(userController.CurrentUser);
+
+            Console.WriteLine("Что вы хотите сделать");
+            Console.WriteLine("E - ввести прием пищи");
+            var key = Console.ReadKey();
+
+            if(key.Key == ConsoleKey.E)
+            {
+                var foods = EnterEating();
+                eatingController.Add(foods.Food, foods.Weight);
+
+                foreach(var item in eatingController.Eating.Foods)
+                {
+                    Console.WriteLine($"\t{item.Key} - {item.Value}");
+                }
+            }
+
             Console.ReadLine();
+        }
+
+        private static (Food Food, double Weight) EnterEating()
+        {
+            Console.Write("Введите название продукта : ");
+            var food = Console.ReadLine();
+                        
+            var weight = ParseDouble("вес порции");
+            var callories = ParseDouble("калорийность");
+            var proteins = ParseDouble("белки");
+            var fats = ParseDouble("жиры");
+            var carbohydraters = ParseDouble("углеводы");
+
+            var product = new Food(food, callories, proteins, fats, carbohydraters);
+
+            return (Food : product, Weight : weight);
         }
 
         private static double ParseDouble(string name)
