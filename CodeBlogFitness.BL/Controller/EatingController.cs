@@ -11,9 +11,9 @@ namespace CodeBlogFitness.BL.Controller
     {
         private readonly User user;
 
-        private const string FOOD_FILE_NAME = "foods.dat";
+        private const string FOODS_FILE_NAME = "foods.dat";
 
-        private const string EATING_FILE_NAME = "eatings.dat";
+        private const string EATINGS_FILE_NAME = "eatings.dat";
 
         public List<Food> Foods { get; }
 
@@ -26,15 +26,12 @@ namespace CodeBlogFitness.BL.Controller
             Eating = GetEating();
         }
 
-        private Eating GetEating()
-        {
-            return Load<Eating>(EATING_FILE_NAME) ?? new Eating(user);
-        }
+        
         
         public void Add(Food food, double weight)
         {
             var product = Foods.SingleOrDefault(f => f.Name == food.Name);
-            if (product != null)
+            if (product == null)
             {
                 Foods.Add(food);
                 Eating.Add(food, weight);
@@ -47,14 +44,20 @@ namespace CodeBlogFitness.BL.Controller
             }
         }
 
+        private Eating GetEating()
+        {
+            return Load<Eating>(EATINGS_FILE_NAME) ?? new Eating(user);
+        }
+
         private void Save()
         {
-            Save(FOOD_FILE_NAME, Foods);
+            Save(FOODS_FILE_NAME, Foods);
+            Save(EATINGS_FILE_NAME, Eating);
         }
 
         private List<Food> GetAllFoods()
         {
-            return Load<List<Food>>(FOOD_FILE_NAME) ?? new List<Food>();
+            return Load<List<Food>>(FOODS_FILE_NAME) ?? new List<Food>();
         }
 
          

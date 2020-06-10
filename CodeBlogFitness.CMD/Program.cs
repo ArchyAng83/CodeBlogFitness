@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Resources;
 using CodeBlogFitness.BL.Controller;
 using CodeBlogFitness.BL.Model;
 
@@ -10,9 +12,12 @@ namespace CodeBlogFitness.CMD
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Вас приветствует приложение CodeBlogFitness");
+            var culture = CultureInfo.CreateSpecificCulture("en-en");
+            var resourceManager = new ResourceManager("CodeBlogFitness.CMD.Languages.Message_ru-ru", typeof(Program).Assembly);
 
-            Console.WriteLine("Введите имя пользователя");
+            Console.WriteLine(resourceManager.GetString("Hello", culture));
+
+            Console.WriteLine(resourceManager.GetString("EnterName", culture));
             var name = Console.ReadLine();
                         
             var userController = new UserController(name);
@@ -36,6 +41,7 @@ namespace CodeBlogFitness.CMD
             Console.WriteLine("Что вы хотите сделать");
             Console.WriteLine("E - ввести прием пищи");
             var key = Console.ReadKey();
+            Console.WriteLine();
 
             if(key.Key == ConsoleKey.E)
             {

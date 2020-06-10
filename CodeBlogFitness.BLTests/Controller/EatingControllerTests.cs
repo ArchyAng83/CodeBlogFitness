@@ -24,7 +24,7 @@ namespace CodeBlogFitness.BL.Controller.Tests
             var food = new Food(foodName, rnd.Next(50, 500), rnd.Next(50, 500), rnd.Next(50, 500), rnd.Next(50, 500));
 
             //Act
-            eatingController.Add(food, 100);
+            eatingController.Add(food, 100.0);
 
             //Assert
             Assert.AreEqual(food.Name, eatingController.Eating.Foods.First().Key.Name);

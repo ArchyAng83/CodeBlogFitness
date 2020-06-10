@@ -16,7 +16,7 @@ namespace CodeBlogFitness.BL.Controller
         /// <summary>
         /// Пользователь приложения.
         /// </summary>
-        private const string USER_FILE_NAME = "users.dat"; 
+        private const string USERS_FILE_NAME = "users.dat"; 
 
         public List<User> Users { get; }
 
@@ -53,7 +53,7 @@ namespace CodeBlogFitness.BL.Controller
         /// </summary>
         public void Save()
         {
-            Save(USER_FILE_NAME, Users);
+            Save(USERS_FILE_NAME, Users);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace CodeBlogFitness.BL.Controller
         /// <returns> Пользователь приложения. </returns>
         private List<User> GetUsersData()
         {
-            return Load<List<User>>(USER_FILE_NAME) ?? new List<User>();
+            return Load<List<User>>(USERS_FILE_NAME) ?? new List<User>();
             
         }
 
